@@ -1,5 +1,11 @@
-# AleksandrMalinovskiy_microservices
-AleksandrMalinovskiy microservices repository
+# AleksandrMalinovskiy_microservices\
+AleksandrMalinovskiy microservices repository\
+ДЗ docker -3\
+Выполнено все согласно методичке.\
+По истогу получили запущенное приложение в докере на ip:9292\
+Для хранения информации вне докера подклбчили волиум к монге\
+В ходе выполнения задания со * были уменьшены размеры image за счет оптимизации сборки\
+________
 ДЗ docker -1,2\
 Выполнено все согласно методичке.\
 В итоге приложение запущенное в докере на хосте ВМ в яндекс клауд\
