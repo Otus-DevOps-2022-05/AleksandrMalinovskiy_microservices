@@ -11,7 +11,7 @@ services:
            - post_db
   ui:
     build: ./ui
-    image: ${USERNAME}/ui:${ui_version}
+    image: ${username}/ui:${ui_version}
     container_name: ui_v_${ui_version}
     ports:
       - ${ui_port}:9292/tcp
@@ -20,13 +20,13 @@ services:
       - back_net
   post:
     build: ./post-py
-    image: ${USERNAME}/post:${post_version}
+    image: ${username}/post:${post_version}
     container_name: post_v_${post_version}
     networks:
       - back_net
   comment:
     build: ./comment
-    image: ${USERNAME}/comment:${comment_version}
+    image: ${username}/comment:${comment_version}
     container_name: comment_v_${comment_version}
     networks:
       - back_net
