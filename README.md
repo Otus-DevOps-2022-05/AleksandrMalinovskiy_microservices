@@ -14,7 +14,7 @@ AleksandrMalinovskiy microservices repository\
 - Узнайте как образуется базовое имя проекта. Можно ли его задать? Если можно то как? \
 Сделано:\
 Добавлен алиас к монге\
-В docker-compose.yml указаны переменные описане в .env при запуске docker-compose up -d берутся перепенные из файла.\
+В docker-compose.yml указаны переменные описанные в .env при запуске docker-compose up -d берутся переменные из файла.\
 В docker-compose.yml добалены строки container_name: для того что бы указать имя контейнера
 _________
 ДЗ docker -3\
