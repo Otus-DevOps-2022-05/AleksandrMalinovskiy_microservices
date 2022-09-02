@@ -1,5 +1,26 @@
 # AleksandrMalinovskiy_microservices\
 AleksandrMalinovskiy microservices repository\
+ДЗ monitiring-1\
+Выполнено все согласно методичке.\
+По итогу имеем запущеное приложение на ip:9292 и запущенную систему мониторинга.\
+Самостоятельное задание. \
+1.Добавьте в Prometheus мониторинг MongoDB с использованием необходимого экспортера.\
+2.Добавьте в Prometheus мониторинг сервисов comment, post, ui с помощью blackbox exporter.\
+3.Напишите Makefile , который в минимальном варианте умеет:
+ - Билдить любой или все образы, которые сейчас используются
+ - Умеет пушить их в докер хаб
+
+
+Сделано:\
+Добавлен контейнер gpuliyar/mongo-exporter, метрики с БД приходят все работает отлично.\
+Добавлен контейнер blackbox он проверяет отклик с ip:9292 конфиг его лежит в monitoring/blackbox.\
+Написан Makefile. В нем написаны команды на билд контейнеров и пуш images в dockerhub.\
+Ссылки на образы в dockerhub.\
+https://hub.docker.com/repository/docker/aemalinovskiy/prometheus  \
+https://hub.docker.com/repository/docker/aemalinovskiy/post  \
+https://hub.docker.com/repository/docker/aemalinovskiy/comment \
+https://hub.docker.com/repository/docker/aemalinovskiy/ui
+__________
 ДЗ docker-4\
 Выполнено все согласно методичке.\
 По итогу имеем запущеное приложение на ip:9292, но теперь запущенное и описаное в docker-compose.yml\

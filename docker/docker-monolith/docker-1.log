@@ -4,4 +4,3 @@ ubuntu                 18.04     8d5df41c547b   12 days ago      63.1MB
 
 docker inspect <u_container_id> выводит информацию о уже созданном контейнере ,
 а docker inspect <u_image_id> выводит информацию о образе-шаблоне, на основе которого создается контейнер.
-
