@@ -1,43 +1,71 @@
 version: '3.3'
 services:
-  db:
+  post_db:
     image: mongo:3.2
+    container_name: mongodb
     volumes:
-      - db:/data/db
+      - post_db:/data/db
+    ports:
+      - '27017:27017'
+    networks:
+      back_net:
+        aliases:
+          - post_db
 
   ui:
     build: ../src/ui
-    image: ${username}/ui
+#    image: ${username}/ui:${ui_version}
+#    image: ${username}/ui
+    container_name: ui_v_1
     ports:
-      - '9292:9292'
+      - 9292:9292/tcp
+    environment:
+     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     logging:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
         tag: service.ui
-    environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
-
+    networks:
+      - front_net
+      - back_net
   post:
     build: ../src/post-py
-    image: ${username}/post
-    links:
-      - "db:post_db"
+#    image: ${username}/post:${post_version}
+#    image: ${username}/post
+    environment:
+      - POST_DATABASE_HOST=post_db
+      - POST_DATABASE=posts
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+    depends_on:
+      - post_db
+    ports:
+      - "5000:5000"
     logging:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
         tag: service.post
-    environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
-
+    container_name: post_v_1
+    networks:
+      back_net:
+         aliases:
+           - post
   comment:
     build: ../src/comment
-    image: ${username}/comment
-    links:
-      - "db:comment_db"
+#    image: ${username}/comment:${comment_version}
+#    image: ${username}/comment
+    container_name: comment_v_1
     environment:
-      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+    networks:
+      back_net:
+         aliases:
+           - comment
 
 volumes:
-  db:
+  post_db:
+
+networks:
+  front_net:
+  back_net:

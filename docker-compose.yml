@@ -1,128 +1,43 @@
 version: '3.3'
 services:
-  post_db:
+  db:
     image: mongo:3.2
-    container_name: mongodb
     volumes:
-      - post_db:/data/db
-    ports:
-      - '27017:27017'
-    networks:
-      back_net:
-        aliases:
-          - post_db
+      - db:/data/db
 
   ui:
-#    build: ./ui
-#    image: ${username}/ui:${ui_version}
+    build: ../src/ui
     image: ${username}/ui
-    container_name: ui_v_1
     ports:
-      - 9292:9292/tcp
-    environment:
-     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+      - '9292:9292'
     logging:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
         tag: service.ui
-    networks:
-      - front_net
-      - back_net
-  post:
-#    build: ./post-py
-#    image: ${username}/post:${post_version}
-    image: ${username}/post
     environment:
-      - POST_DATABASE_HOST=post_db
-      - POST_DATABASE=posts
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
-    depends_on:
-      - post_db
-    ports:
-      - "5000:5000"
+
+  post:
+    build: ../src/post-py
+    image: ${username}/post
+    links:
+      - "db:post_db"
     logging:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
         tag: service.post
-    container_name: post_v_1
-    networks:
-      back_net:
-         aliases:
-           - post
-  comment:
-#    build: ./comment
-#    image: ${username}/comment:${comment_version}
-    image: ${username}/comment
-    container_name: comment_v_1
     environment:
-     - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
-    networks:
-      back_net:
-         aliases:
-           - comment
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
-#  prometheus:
-#    image: ${username}/prometheus
-#    ports:
-#      - '9090:9090'
-#    networks:
-#      - back_net
-#      - front_net
-#    volumes:
-#      - prometheus_data:/prometheus
-#    command:
-#      - '--storage.tsdb.path=/prometheus'
-#      - '--storage.tsdb.retention=1d'
-
-#  node-exporter:
-#    image: prom/node-exporter:v0.15.2
-#    user: root
-#    networks:
-#      - back_net
-#      - /proc:/host/proc:ro
-#      - /sys:/host/sys:ro
-#      - /:/rootfs:ro
-#    command:
-#      - '--path.procfs=/host/proc'
-#      - '--path.sysfs=/host/sys'
-#      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
-#  mongo_exporter:
-#    restart: 'always'
-#    ports:
-#    - '9001:9001'
-#    image: gpuliyar/mongo-exporter
-#    container_name: mongo-exporter-container
-#    environment:
-#    - 'MONGO_SERVICE=post_db'
-#    - 'MONGO_PORT=27017'
-#    depends_on:
-#    - post_db
-#    networks:
-#      back_net:
-#        aliases:
-#           - mongo_exporter
-
-#  blackbox:
-#    image: ${username}/blackbox
-#    container_name: blackbox
-#    hostname: blackbox
-#    ports:
-#      - 9115:9115
-#    restart: unless-stopped
-#    command:
-#      - "--config.file=/etc/blackbox/blackbox.yml"
-#    environment:
-#      TZ: "Europe/Moscow"
-#    networks:
-#      - back_net
+  comment:
+    build: ../src/comment
+    image: ${username}/comment
+    links:
+      - "db:comment_db"
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
 volumes:
-  post_db:
-#  prometheus_data:
-
-networks:
-  front_net:
-  back_net:
+  db:
