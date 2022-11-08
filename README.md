@@ -1,5 +1,11 @@
 # AleksandrMalinovskiy_microservices\
 AleksandrMalinovskiy microservices repository\
+ДЗ kubernetes-2\
+Выполнено все согласно методичке.\
+Развернуто локальное окружение для работы с Kubernetes\
+Развернут Kubernetes в Yandex Cloud\
+Запущенно приложение reddit в Kubernetes
+___________
 ДЗ kubernetes-1\
 Выполнено все согласно методичке.\
 По итогу имеем развернутый k8s с двумя нодами.\
