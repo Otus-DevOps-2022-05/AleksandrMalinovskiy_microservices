@@ -1,2 +1,0 @@
-f74f0d1
-kubernetes-2
