@@ -1,5 +1,9 @@
 # AleksandrMalinovskiy_microservices\
 AleksandrMalinovskiy microservices repository\
+ДЗ kubernetes-3\
+Выполнено все согласно методичке.\
+Проверена работа всех компонентов согласно плану.
+____________
 ДЗ kubernetes-2\
 Выполнено все согласно методичке.\
 Развернуто локальное окружение для работы с Kubernetes\
